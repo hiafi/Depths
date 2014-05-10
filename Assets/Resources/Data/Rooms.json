@@ -1,0 +1,42 @@
+{
+    "Square5x5": {
+      "width" : 5,
+      "height" : 5,
+      "possible_neighbors" : ["Square5x5", "Diamond5x5", "O7x7"],
+      "room" : [
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     "
+      ]
+    },
+    "Diamond5x5": {
+      "width" : 5,
+      "height" : 5,
+      "possible_neighbors" : ["Square5x5"],
+      "room" : [
+        "II II",
+        "I   I",
+        "     ",
+        "I   I",
+        "II II"
+      ]
+    },
+    "O7x7": {
+      "width" : 7,
+      "height" : 7,
+      "centerx" : 4,
+      "centery" : 2,
+      "possible_neighbors" : ["Square5x5"],
+      "room" : [
+        "II   II",
+        "I     I",
+        "   I   ",
+        "  III  ",
+        "   I   ",
+        "I     I",
+        "II   II"
+      ]
+    }
+}
