@@ -1,25 +1,21 @@
 using System.Collections.Generic;
 using System;
 
+using UnityEngine;
 
-public class Effect
-{
-	public string name;
-	public bool positive;
-	public int duration;
-	public string effect;
-	public int amount;
-	public string type;
-}
+
+
+
+
 
 public class Actor
 {
 	public string name;
 	
-	public int hp;
-	public int max_hp;
-	public int mp;
-	public int max_mp;
+	public int hp = 10;
+	public int max_hp = 10;
+	public int mp = 10;
+	public int max_mp = 10;
 
 	public Dictionary<string, float> attributes;
 
@@ -28,11 +24,25 @@ public class Actor
 
 	protected List<Effect> effects;
 
+	public List<Ability> abilities;
+	protected Ability attack_ability;
 
 	public Actor ()
 	{
 		attributes = new Dictionary<string, float>();
 		effects = new List<Effect>();
+		abilities = new List<Ability>();
+
+		attributes["strength"] = 0;
+		attributes["dexterity"] = 0;
+		attributes["constitution"] = 0;
+		attributes["mind"] = 0;
+		attributes["intuition"] = 0;
+		attributes["composure"] = 0;
+
+		attack_ability = new Ability();
+		attack_ability.name = "Attack";
+		attack_ability.scaling_attribute = "strength";
 	}
 
 	public float GetResist(string name)
@@ -48,7 +58,7 @@ public class Actor
 		}
 		else
 		{
-			int dmg = (int)(amount * (1 - GetResist(type)));
+			int dmg = (int)(amount * (1.0 - GetResist(type)));
 			foreach (Effect e in effects)
 			{
 				if (e.effect == "shield")
@@ -102,6 +112,24 @@ public class Actor
 	{
 		effects.Add(e);
 	}
+
+	public Ability GetAttack()
+	{
+		return attack_ability;
+	}
+
+	public int GetShield()
+	{
+		int s = 0;
+		foreach (Effect e in effects)
+		{
+			if (e.effect == "shield")
+			{
+				s += e.amount;
+			}
+		}
+		return s;
+	}
 }
 
 public class PlayerCharacter : Actor
@@ -110,7 +138,7 @@ public class PlayerCharacter : Actor
 
 	public PlayerCharacter() : base()
 	{
-
+		attack_ability.uses_weapon = true;
 	}
 }
 

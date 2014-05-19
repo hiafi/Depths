@@ -20,6 +20,11 @@ namespace DungeonNamespace
 			this.obj.SetScale(DungeonControl.tile_scale, DungeonControl.tile_scale);
 		}
 
+		public void Delete()
+		{
+			obj.Delete();
+		}
+
 		public void SetPosition(int x, int y)
 		{
 			this.x = x;
@@ -165,6 +170,27 @@ namespace DungeonNamespace
 			if (mg != null)
 			{
 				MainControl.StartBattle(mg);
+			}
+		}
+
+		public void RemoveMonsters(MonsterGroup mg)
+		{
+			foreach (MonsterGroupPos _mg in dungeon.monsters)
+			{
+				if (_mg.mg == mg)
+				{
+					foreach (ActorTile mt in monster_tiles)
+					{
+						if (mt.x == _mg.x && mt.y == _mg.y)
+						{
+							mt.Delete();
+							monster_tiles.Remove(mt);
+							break;
+						}
+					}
+					dungeon.monsters.Remove(_mg);
+					break;
+				}
 			}
 		}
 

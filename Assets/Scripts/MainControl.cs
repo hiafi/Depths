@@ -6,9 +6,7 @@ using BattleNamespace;
 using MessageHandle;
 
 public class MainControl : MonoBehaviour {
-
-	public GameObject tile;
-
+	
 	private static bool battle = false;
 
 	private static DungeonControl dControl;
@@ -20,6 +18,7 @@ public class MainControl : MonoBehaviour {
 		RoomStorage.Init ();
 		Party.Init();
 		MessageHandler.Init();
+		MessageLog.Init();
 		MainControl.dControl = new DungeonControl();
 		MainControl.bControl = new BattleControl();
 	}
@@ -43,9 +42,10 @@ public class MainControl : MonoBehaviour {
 		MainControl.battle = true;
 	}
 
-	public static void EndBattle()
+	public static void EndBattle(MonsterGroup monsters)
 	{
 		MainControl.battle = false;
+		MainControl.dControl.RemoveMonsters(monsters);
 	}
 
 
